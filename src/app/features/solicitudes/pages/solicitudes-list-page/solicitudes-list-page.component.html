@@ -1,0 +1,103 @@
+<app-page-header
+  title="Solicitudes de reposición"
+  subtitle="Consulta, filtra y revisa el estado de las solicitudes generadas por las sedes."
+  [actionLabel]="canCreate ? 'Registrar solicitud' : undefined"
+  [actionLink]="canCreate ? '/solicitudes/nueva' : undefined"
+></app-page-header>
+
+<section class="surface-card filters-panel">
+  <form class="filters-grid" [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+    <label class="form-field">
+      <span>Estado</span>
+      <select formControlName="estado">
+        <option value="">Todos</option>
+        <option *ngFor="let estado of estadoOptions" [value]="estado">{{ estado }}</option>
+      </select>
+    </label>
+
+    <label class="form-field">
+      <span>Prioridad</span>
+      <select formControlName="prioridad">
+        <option value="">Todas</option>
+        <option *ngFor="let prioridad of prioridadOptions" [value]="prioridad">
+          {{ prioridad }}
+        </option>
+      </select>
+    </label>
+
+    <label *ngIf="showSedeFilter" class="form-field">
+      <span>Sede</span>
+      <select formControlName="sedeId">
+        <option value="">Todas</option>
+        <option *ngFor="let sede of sedes" [value]="sede.id">{{ sede.nombre }}</option>
+      </select>
+    </label>
+
+    <label class="form-field">
+      <span>Código o producto</span>
+      <input type="text" formControlName="texto" placeholder="Ej. SOL-20260420-001 o Amoxicilina" />
+    </label>
+
+    <div class="filter-actions">
+      <button class="button" type="submit">Aplicar filtros</button>
+      <button class="button button-secondary" type="button" (click)="clearFilters()">
+        Limpiar
+      </button>
+    </div>
+  </form>
+</section>
+
+<app-loading-state *ngIf="loading" message="Cargando solicitudes..."></app-loading-state>
+
+<section *ngIf="!loading && solicitudes.length > 0" class="surface-card list-panel">
+  <div class="panel-summary">
+    <strong>{{ solicitudes.length }} solicitudes encontradas</strong>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Sede</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let solicitud of solicitudes">
+          <td>{{ solicitud.codigo }}</td>
+          <td>{{ solicitud.sede?.nombre || '-' }}</td>
+          <td>{{ solicitud.producto?.nombre || '-' }}</td>
+          <td>{{ solicitud.cantidadSolicitada }}</td>
+          <td>
+            <app-status-badge [value]="solicitud.prioridad" kind="prioridad"></app-status-badge>
+          </td>
+          <td>
+            <app-status-badge [value]="solicitud.estado"></app-status-badge>
+          </td>
+          <td>{{ solicitud.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <button class="button button-secondary" type="button" (click)="openDetail(solicitud)">
+              Ver detalle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<app-empty-state
+  *ngIf="!loading && !errorMessage && solicitudes.length === 0"
+  title="No se encontraron solicitudes"
+  description="Ajusta los filtros o registra una nueva solicitud para ver resultados."
+></app-empty-state>
+
+<div *ngIf="!loading && errorMessage" class="surface-card panel-error">
+  {{ errorMessage }}
+</div>

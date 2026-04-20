@@ -1,0 +1,25 @@
+.create-panel {
+  padding: 22px;
+}
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .form-actions {
+    flex-direction: column;
+  }
+}

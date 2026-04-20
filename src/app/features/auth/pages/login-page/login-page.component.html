@@ -1,0 +1,48 @@
+<div class="login-page">
+  <section class="login-hero">
+    <p class="hero-tag">AbastiFarma Perú</p>
+    <h1>Gestión interna de solicitudes de reposición</h1>
+    <p class="hero-copy">
+      Plataforma para monitorear stock crítico, registrar solicitudes por sede y seguir el flujo
+      operativo entre botica, operaciones y almacén.
+    </p>
+
+    <div class="hero-panel">
+      <h2>Credenciales de prueba</h2>
+      <ul>
+        <li *ngFor="let account of demoUsers">{{ account }}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="login-card surface-card">
+    <div class="card-header">
+      <h2>Ingreso al sistema</h2>
+      <p>Usa un usuario operativo vigente para acceder a la plataforma.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label class="form-field">
+        <span>Correo corporativo</span>
+        <input type="email" formControlName="email" placeholder="usuario@abastifarma.pe" />
+        <small *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          Ingresa un correo válido.
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span>Contraseña</span>
+        <input type="password" formControlName="password" placeholder="Tu contraseña" />
+        <small *ngIf="form.controls.password.touched && form.controls.password.invalid">
+          La contraseña es obligatoria.
+        </small>
+      </label>
+
+      <div *ngIf="errorMessage" class="inline-error">{{ errorMessage }}</div>
+
+      <button class="button full-width" type="submit" [disabled]="loading">
+        {{ loading ? 'Ingresando...' : 'Ingresar' }}
+      </button>
+    </form>
+  </section>
+</div>

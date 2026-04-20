@@ -1,0 +1,68 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.estado-solicitud-registrada {
+  background: #edf4ff;
+  color: #234e8b;
+  border-color: #cfe0fb;
+}
+
+.estado-solicitud-aprobada {
+  background: #eaf9f0;
+  color: #12603b;
+  border-color: #b8e5ca;
+}
+
+.estado-solicitud-rechazada {
+  background: #fff1ef;
+  color: #8f2f2f;
+  border-color: #f5c5bf;
+}
+
+.estado-solicitud-atendida {
+  background: #f3f2ff;
+  color: #5642a6;
+  border-color: #dad4f7;
+}
+
+.prioridad-baja {
+  background: #eef7f1;
+  color: #2a6a4d;
+}
+
+.prioridad-media {
+  background: #fff6e8;
+  color: #8a5a13;
+}
+
+.prioridad-alta {
+  background: #fff0ec;
+  color: #a13b2a;
+}
+
+.estado-sede-activa {
+  background: #eaf9f0;
+  color: #12603b;
+}
+
+.estado-sede-inactiva {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.estado-producto-activo {
+  background: #eaf9f0;
+  color: #12603b;
+}
+
+.estado-producto-inactivo {
+  background: #f3f4f6;
+  color: #4b5563;
+}

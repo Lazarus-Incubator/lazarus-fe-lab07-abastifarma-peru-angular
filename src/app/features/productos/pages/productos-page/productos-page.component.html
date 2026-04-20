@@ -1,0 +1,51 @@
+<app-page-header
+  title="Productos"
+  subtitle="Consulta rápida del catálogo interno y sus niveles de stock referenciales."
+></app-page-header>
+
+<app-loading-state *ngIf="loading" message="Cargando productos..."></app-loading-state>
+
+<section *ngIf="!loading && productos.length > 0" class="surface-card products-panel">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th>Stock actual</th>
+          <th>Stock mínimo</th>
+          <th>Estado</th>
+          <th>Condición</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.codigo }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.stockActual }}</td>
+          <td>{{ producto.stockMinimo }}</td>
+          <td>
+            <app-status-badge [value]="producto.estado" kind="estado-producto"></app-status-badge>
+          </td>
+          <td>
+            <span [class.text-danger]="isCritical(producto)">
+              {{ isCritical(producto) ? 'Crítico' : 'Normal' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<app-empty-state
+  *ngIf="!loading && !errorMessage && productos.length === 0"
+  title="No hay productos registrados"
+  description="La fake API aún no devuelve elementos para el catálogo."
+></app-empty-state>
+
+<div *ngIf="!loading && errorMessage" class="surface-card panel-error">
+  {{ errorMessage }}
+</div>

@@ -1,0 +1,54 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">AF</span>
+      <div>
+        <h1>AbastiFarma Perú</h1>
+        <p>Gestión interna de reposiciones</p>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/solicitudes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Solicitudes
+      </a>
+      <a *ngIf="canCreateRequest()" routerLink="/solicitudes/nueva" routerLinkActive="active">
+        Nueva solicitud
+      </a>
+      <a routerLink="/productos" routerLinkActive="active">Productos</a>
+      <a routerLink="/perfil" routerLinkActive="active">Perfil</a>
+    </nav>
+  </aside>
+
+  <div class="content-area">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Sistema operativo interno</p>
+        <strong>Cadena de boticas multisedes</strong>
+      </div>
+
+      <div class="user-box" *ngIf="currentUser$ | async as user">
+        <div>
+          <strong>{{ user.nombreCompleto }}</strong>
+          <p>{{ user.rol | roleLabel }}<span *ngIf="user.sedeId"> · Sede asignada</span></p>
+        </div>
+
+        <button class="button button-secondary" type="button" (click)="logout()">Salir</button>
+      </div>
+    </header>
+
+    <div
+      *ngIf="notification$ | async as notification"
+      class="notification"
+      [class.notification-success]="notification.type === 'success'"
+      [class.notification-error]="notification.type === 'error'"
+    >
+      {{ notification.text }}
+    </div>
+
+    <main class="page-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

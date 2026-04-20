@@ -1,0 +1,37 @@
+.filters-panel,
+.list-panel {
+  padding: 22px;
+}
+
+.filters-panel {
+  margin-bottom: 20px;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.panel-summary {
+  margin-bottom: 14px;
+}
+
+.panel-error {
+  padding: 22px;
+  color: #8f2f2f;
+}
+
+@media (max-width: 720px) {
+  .filter-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

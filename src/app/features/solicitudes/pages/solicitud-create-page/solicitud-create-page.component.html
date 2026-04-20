@@ -1,0 +1,82 @@
+<app-page-header
+  title="Nueva solicitud"
+  subtitle="Registra una nueva reposición para una sede activa y un producto habilitado."
+></app-page-header>
+
+<app-loading-state *ngIf="loading" message="Preparando formulario..."></app-loading-state>
+
+<section *ngIf="!loading" class="surface-card create-panel">
+  <div *ngIf="blockedMessage" class="inline-error">{{ blockedMessage }}</div>
+  <div *ngIf="errorMessage" class="inline-error">{{ errorMessage }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+      <label class="form-field">
+        <span>Sede</span>
+        <select formControlName="sedeId">
+          <option value="">Selecciona una sede</option>
+          <option *ngFor="let sede of sedes" [value]="sede.id">{{ sede.nombre }}</option>
+        </select>
+        <small *ngIf="form.controls.sedeId.touched && form.controls.sedeId.invalid">
+          Selecciona una sede válida.
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span>Producto</span>
+        <select formControlName="productoId">
+          <option value="">Selecciona un producto</option>
+          <option *ngFor="let producto of productos" [value]="producto.id">
+            {{ producto.codigo }} - {{ producto.nombre }}
+          </option>
+        </select>
+        <small *ngIf="form.controls.productoId.touched && form.controls.productoId.invalid">
+          Selecciona un producto activo.
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span>Cantidad solicitada</span>
+        <input type="number" min="1" formControlName="cantidadSolicitada" />
+        <small
+          *ngIf="
+            form.controls.cantidadSolicitada.touched &&
+            form.controls.cantidadSolicitada.invalid
+          "
+        >
+          La cantidad debe ser mayor a cero.
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span>Prioridad</span>
+        <select formControlName="prioridad">
+          <option *ngFor="let prioridad of priorityOptions" [value]="prioridad">
+            {{ prioridad }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <label class="form-field">
+      <span>Motivo</span>
+      <textarea
+        rows="5"
+        formControlName="motivo"
+        placeholder="Describe de forma breve el motivo de la reposición."
+      ></textarea>
+      <small *ngIf="form.controls.motivo.touched && form.controls.motivo.invalid">
+        El motivo debe tener entre 10 y 240 caracteres.
+      </small>
+    </label>
+
+    <div class="form-actions">
+      <button class="button" type="submit" [disabled]="!!blockedMessage">
+        {{ saving ? 'Guardando...' : 'Registrar solicitud' }}
+      </button>
+      <button class="button button-secondary" type="button" routerLink="/solicitudes">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</section>

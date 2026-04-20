@@ -1,44 +1,87 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Dependencies
+/node_modules/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Angular / TypeScript build output
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+/.angular/cache/
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Test / coverage output
+/coverage/
+/test-results/
+/playwright-report/
+/cypress/videos/
+/cypress/screenshots/
+/__screenshots__/
+
+# Runtime caches and temp files
+.cache/
+.eslintcache
+.sass-cache/
+/connect.lock
+/libpeerconnection.log
+/testem.log
+/typings/
+*.tmp
+*.temp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.development.example
+!.env.local.example
+!.env.production.example
+
+# Package manager local stores
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
 
 # IDEs and editors
 .idea/
 .project
 .classpath
+.settings/
 .c9/
 *.launch
-.settings/
+*.code-workspace
 *.sublime-workspace
+*.sublime-project
+.vs/
 
-# Visual Studio Code
+# VS Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/mcp.json
-.history/*
+.history/
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-__screenshots__/
-
-# System files
+# OS / filesystem noise
 .DS_Store
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archive and backup files
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+*~

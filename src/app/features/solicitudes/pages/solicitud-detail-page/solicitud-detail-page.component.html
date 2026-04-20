@@ -1,0 +1,117 @@
+<app-page-header
+  title="Detalle de solicitud"
+  subtitle="Revisa la información completa y ejecuta acciones según el rol y el estado actual."
+></app-page-header>
+
+<button class="button button-secondary back-button" type="button" (click)="goBack()">
+  Volver al listado
+</button>
+
+<app-loading-state *ngIf="loading" message="Cargando detalle de la solicitud..."></app-loading-state>
+
+<div *ngIf="!loading && solicitud as item" class="detail-layout">
+  <section class="surface-card detail-card">
+    <div class="detail-header">
+      <div>
+        <p class="label">Código</p>
+        <h3>{{ item.codigo }}</h3>
+      </div>
+
+      <div class="detail-badges">
+        <app-status-badge [value]="item.prioridad" kind="prioridad"></app-status-badge>
+        <app-status-badge [value]="item.estado"></app-status-badge>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div>
+        <span>Sede</span>
+        <strong>{{ item.sede?.nombre || '-' }}</strong>
+      </div>
+      <div>
+        <span>Producto</span>
+        <strong>{{ item.producto?.nombre || '-' }}</strong>
+      </div>
+      <div>
+        <span>Cantidad solicitada</span>
+        <strong>{{ item.cantidadSolicitada }}</strong>
+      </div>
+      <div>
+        <span>Creada por</span>
+        <strong>{{ item.creadaPor?.nombreCompleto || '-' }}</strong>
+      </div>
+      <div>
+        <span>Fecha de creación</span>
+        <strong>{{ item.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</strong>
+      </div>
+      <div>
+        <span>Última actualización</span>
+        <strong>{{ item.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}</strong>
+      </div>
+      <div>
+        <span>Atendida por</span>
+        <strong>{{ item.atendidaPor?.nombreCompleto || 'Pendiente' }}</strong>
+      </div>
+    </div>
+
+    <div class="motivo-box">
+      <span>Motivo</span>
+      <p>{{ item.motivo }}</p>
+    </div>
+  </section>
+
+  <section class="surface-card action-card">
+    <h3>Gestión de la solicitud</h3>
+    <p class="helper-text">
+      Las acciones visibles respetan el rol del usuario y el estado actual de la solicitud.
+    </p>
+
+    <div *ngIf="item.observacionRespuesta" class="response-box">
+      <span>Observación registrada</span>
+      <p>{{ item.observacionRespuesta }}</p>
+    </div>
+
+    <form *ngIf="canApprove || canReject || canAttend" [formGroup]="observationForm">
+      <label class="form-field">
+        <span>Observación de respuesta</span>
+        <textarea
+          rows="5"
+          formControlName="observation"
+          placeholder="Puedes registrar un comentario breve para esta acción."
+        ></textarea>
+      </label>
+
+      <div class="action-buttons">
+        <button *ngIf="canApprove" class="button" type="button" [disabled]="actionLoading" (click)="approve()">
+          Aprobar
+        </button>
+        <button
+          *ngIf="canReject"
+          class="button button-danger"
+          type="button"
+          [disabled]="actionLoading"
+          (click)="reject()"
+        >
+          Rechazar
+        </button>
+        <button
+          *ngIf="canAttend"
+          class="button"
+          type="button"
+          [disabled]="actionLoading"
+          (click)="attend()"
+        >
+          Marcar como atendida
+        </button>
+      </div>
+    </form>
+
+    <p *ngIf="!canApprove && !canReject && !canAttend" class="helper-text">
+      No hay acciones disponibles para tu rol sobre esta solicitud.
+    </p>
+  </section>
+</div>
+
+<div *ngIf="!loading && errorMessage" class="surface-card panel-error">
+  {{ errorMessage }}
+</div>

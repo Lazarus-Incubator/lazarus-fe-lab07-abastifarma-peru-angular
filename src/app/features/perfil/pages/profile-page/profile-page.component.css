@@ -1,0 +1,29 @@
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.profile-card {
+  padding: 22px;
+}
+
+.profile-card h3 {
+  margin: 0 0 20px;
+}
+
+dl {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+dt {
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+dd {
+  margin: 0;
+  font-weight: 600;
+}

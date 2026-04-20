@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div>
+    <h2>{{ title }}</h2>
+    <p *ngIf="subtitle">{{ subtitle }}</p>
+  </div>
+
+  <a
+    *ngIf="actionLabel && actionLink"
+    class="button"
+    [routerLink]="actionLink"
+    [class.button-disabled]="actionDisabled"
+    [attr.aria-disabled]="actionDisabled"
+    (click)="actionDisabled && $event.preventDefault()"
+  >
+    {{ actionLabel }}
+  </a>
+</div>

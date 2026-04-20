@@ -1,0 +1,59 @@
+<app-page-header
+  title="Dashboard operativo"
+  subtitle="Resumen rápido del estado de solicitudes y productos con stock crítico."
+></app-page-header>
+
+<app-loading-state *ngIf="loading" message="Cargando indicadores del dashboard..."></app-loading-state>
+
+<div *ngIf="!loading && summary as data" class="dashboard-grid">
+  <div class="stats-grid">
+    <app-stat-card title="Total de solicitudes" [value]="data.totalSolicitudes"></app-stat-card>
+    <app-stat-card title="Registradas" [value]="data.solicitudesRegistradas"></app-stat-card>
+    <app-stat-card title="Aprobadas" [value]="data.solicitudesAprobadas"></app-stat-card>
+    <app-stat-card title="Rechazadas" [value]="data.solicitudesRechazadas"></app-stat-card>
+    <app-stat-card title="Atendidas" [value]="data.solicitudesAtendidas"></app-stat-card>
+    <app-stat-card title="Productos críticos" [value]="data.productosCriticos"></app-stat-card>
+  </div>
+
+  <section class="surface-card panel">
+    <div class="panel-header">
+      <div>
+        <h3>Productos con stock crítico</h3>
+        <p>Inventario activo con stock igual o por debajo del mínimo definido.</p>
+      </div>
+    </div>
+
+    <app-empty-state
+      *ngIf="data.listaProductosCriticos.length === 0"
+      title="No hay productos críticos"
+      description="Todos los productos activos se encuentran por encima del stock mínimo."
+    ></app-empty-state>
+
+    <div *ngIf="data.listaProductosCriticos.length > 0" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Stock actual</th>
+            <th>Stock mínimo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of data.listaProductosCriticos">
+            <td>{{ producto.codigo }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.categoria }}</td>
+            <td>{{ producto.stockActual }}</td>
+            <td>{{ producto.stockMinimo }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="!loading && errorMessage" class="surface-card panel-error">
+  {{ errorMessage }}
+</div>

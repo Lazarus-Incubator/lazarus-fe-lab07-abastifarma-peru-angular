@@ -1,0 +1,50 @@
+<app-page-header
+  title="Perfil de usuario"
+  subtitle="Información de sesión y contexto operativo asociado a la cuenta activa."
+></app-page-header>
+
+<section *ngIf="user" class="profile-grid">
+  <article class="surface-card profile-card">
+    <h3>Datos generales</h3>
+    <dl>
+      <div>
+        <dt>Nombre completo</dt>
+        <dd>{{ user.nombreCompleto }}</dd>
+      </div>
+      <div>
+        <dt>Correo</dt>
+        <dd>{{ user.email }}</dd>
+      </div>
+      <div>
+        <dt>Rol</dt>
+        <dd>{{ user.rol | roleLabel }}</dd>
+      </div>
+      <div>
+        <dt>Estado</dt>
+        <dd>{{ user.estado }}</dd>
+      </div>
+    </dl>
+  </article>
+
+  <article class="surface-card profile-card">
+    <h3>Sede asociada</h3>
+    <dl>
+      <div>
+        <dt>Sede</dt>
+        <dd>{{ sede?.nombre || 'No aplica' }}</dd>
+      </div>
+      <div>
+        <dt>Ciudad</dt>
+        <dd>{{ sede?.ciudad || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd>{{ sede?.codigo || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Estado</dt>
+        <dd>{{ sede?.estado || '-' }}</dd>
+      </div>
+    </dl>
+  </article>
+</section>
